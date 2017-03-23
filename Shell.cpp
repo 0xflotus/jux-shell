@@ -85,9 +85,11 @@ int main(array<System::String ^> ^args)
 			unsigned long bytes = IO::File::ReadAllBytes(curDir + "\\" + argus[1])->Length;
 			try {
 				switch (argus[2]->ToLower()[0]) {
-				case 'k': Console::WriteLine(bytes / (double)1024 + " Kibibytes"); break;
-				case 'm': Console::WriteLine(bytes / (double)(1024 * 1024) + " Mebibytes"); break;
-				case 'g': Console::WriteLine(bytes / (double)(1024 * 1024 * 1024) + " Gibibytes"); break;
+				case 'k': Console::WriteLine((bytes / (double)1024).ToString("F2") + " Kibibytes"); break;
+				case 'm': Console::WriteLine((bytes / (double)(1024 * 1024)).ToString("F2") 
+					+ " Mebibytes"); break;
+				case 'g': Console::WriteLine((bytes / (double)(1024 * 1024 * 1024)).ToString("F2") 
+					+ " Gibibytes"); break;
 				default: {}
 				}
 			}
