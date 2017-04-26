@@ -1,5 +1,3 @@
-// Shell.cpp: Hauptprojektdatei.
-
 #include "stdafx.h"
 
 using namespace System;
@@ -82,21 +80,23 @@ int main(array<System::String ^> ^args)
 			catch (Exception^e) { Console::WriteLine(e->Message); }
 		}
 		else if (argus[0] == "groesse") {
-			unsigned long bytes = IO::File::ReadAllBytes(curDir + "\\" + argus[1])->Length;
+			unsigned long bytes;
+			try { bytes = IO::File::ReadAllBytes(curDir + "\\" + argus[1])->Length; }
+			catch (Exception^ e) { Console::WriteLine(e->Message); }
 			try {
 				switch (argus[2]->ToLower()[0]) {
 				case 'k': Console::WriteLine((bytes / (double)1024).ToString("F2") + " Kibibytes"); break;
-				case 'm': Console::WriteLine((bytes / (double)(1024 * 1024)).ToString("F2") 
+				case 'm': Console::WriteLine((bytes / (double)(1024 * 1024)).ToString("F2")
 					+ " Mebibytes"); break;
-				case 'g': Console::WriteLine((bytes / (double)(1024 * 1024 * 1024)).ToString("F2") 
+				case 'g': Console::WriteLine((bytes / (double)(1024 * 1024 * 1024)).ToString("F2")
 					+ " Gibibytes"); break;
 				default: {}
 				}
 			}
-			catch (Exception^e) { Console::WriteLine(bytes + " Bytes"); }
+			catch (Exception^) { Console::WriteLine(bytes + " Bytes"); }
 		}
 		else if (command == "hilfe") { hilfe(); }
-		else { Console::WriteLine("Dieser Befehl ist mir nicht bekannt."); }
+		else { Console::WriteLine("Dieser Befehl ist mir nicht bekannt. 'hilfe' fuer Hilfe."); }
 	}
 	return 0;
 }
